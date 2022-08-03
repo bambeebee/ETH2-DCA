@@ -50,7 +50,7 @@ interface Token {
     );
 }
 
-contract Standard_Token is Token {
+contract DCAETH2 is Token {
     uint256 private constant MAX_UINT256 = 2**256 - 1;
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowed;
@@ -70,7 +70,7 @@ contract Standard_Token is Token {
         string memory _tokenName,
         uint8 _decimalUnits,
         string memory _tokenSymbol
-    ) {
+    ) public {
         balances[msg.sender] = _initialAmount; // Give the creator all initial tokens
         totalSupply = _initialAmount; // Update total supply
         name = _tokenName; // Set the name for display purposes
@@ -80,7 +80,6 @@ contract Standard_Token is Token {
 
     function transfer(address _to, uint256 _value)
         public
-        override
         returns (bool success)
     {
         require(
@@ -97,7 +96,7 @@ contract Standard_Token is Token {
         address _from,
         address _to,
         uint256 _value
-    ) public override returns (bool success) {
+    ) public returns (bool success) {
         uint256 allowance = allowed[_from][msg.sender];
         require(
             balances[_from] >= _value && allowance >= _value,
@@ -112,18 +111,12 @@ contract Standard_Token is Token {
         return true;
     }
 
-    function balanceOf(address _owner)
-        public
-        view
-        override
-        returns (uint256 balance)
-    {
+    function balanceOf(address _owner) public view returns (uint256 balance) {
         return balances[_owner];
     }
 
     function approve(address _spender, uint256 _value)
         public
-        override
         returns (bool success)
     {
         allowed[msg.sender][_spender] = _value;
@@ -134,7 +127,6 @@ contract Standard_Token is Token {
     function allowance(address _owner, address _spender)
         public
         view
-        override
         returns (uint256 remaining)
     {
         return allowed[_owner][_spender];

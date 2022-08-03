@@ -31,8 +31,18 @@
   "homepage": "https://github.com/truffle-box/polygon-box#readme",
   "devDependencies": {
     "@maticnetwork/maticjs": "^2.0.40",
+    "@openzeppelin/truffle-upgrades": "^1.16.0",
     "@truffle/hdwallet-provider": "^1.4.2",
-    "dotenv": "^9.0.0"
+    "dotenv": "^9.0.0",
+    "eslint": "^8.22.0",
+    "eslint-plugin-react": "^7.30.1"
   },
-  "dependencies": {}
+  "dependencies": {
+<<<<<<< HEAD
+    "@chainlink/contracts": "^0.4.2",
+    "@openzeppelin/contracts": "^4.7.2",
+=======
+>>>>>>> 41ca1c5... test contract
+    "web3": "^1.7.5"
+  }
 }
