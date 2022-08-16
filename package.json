@@ -39,10 +39,15 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@chainlink/contracts": "^0.4.2",
     "@openzeppelin/contracts": "^4.7.2",
 =======
 >>>>>>> 41ca1c5... test contract
+=======
+    "@chainlink/contracts": "^0.4.2",
+    "@openzeppelin/contracts": "^4.7.2",
+>>>>>>> 9f0d39d1f5e683aa4a4b61065c8f40f5d3364679
     "web3": "^1.7.5"
   }
 }
