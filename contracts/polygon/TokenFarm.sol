@@ -9,9 +9,8 @@ import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract TokenFarm {
+contract TokenFarm is ChainlinkClient, Ownable {
     string public name = "Dapp Token Farm";
-    address public owner;
     DappToken public dappToken;
     DaiToken public daiToken;
 
@@ -19,11 +18,11 @@ contract TokenFarm {
     mapping(address => uint) public stakingBalance;
     mapping(address => bool) public hasStaked;
     mapping(address => bool) public isStaking;
+    mapping(address => address) public tokenPriceFeedMapping;
 
     constructor(DappToken _dappToken, DaiToken _daiToken) public {
         dappToken = _dappToken;
         daiToken = _daiToken;
-        owner = msg.sender;
     }
 
     function stakeTokens(uint _amount) public {
@@ -65,9 +64,7 @@ contract TokenFarm {
     }
 
     // Issuing Tokens
-    function issueTokens() public {
-        // Only owner can call this function
-        require(msg.sender == owner, "caller must be the owner");
+    function issueTokens() public onlyOwner{
 
         // Issue tokens to all stakers
         for (uint i=0; i<stakers.length; i++) {
@@ -77,5 +74,27 @@ contract TokenFarm {
                 dappToken.transfer(recipient, balance);
             }
         }
+    }
+
+    function getTokenEthPrice(address token) public view returns (uint256) {
+        address priceFeedAddress = tokenPriceFeedMapping[token];
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(
+            priceFeedAddress
+        );
+        (
+            uint80 roundID,
+            int256 price,
+            uint256 startedAt,
+            uint256 timeStamp,
+            uint80 answeredInRound
+        ) = priceFeed.latestRoundData();
+        return uint256(price);
+    }
+
+     function setPriceFeedContract(address token, address priceFeed)
+        public
+        onlyOwner
+    {
+        tokenPriceFeedMapping[token] = priceFeed;
     }
 }

@@ -54,7 +54,7 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
       chainId: 80001,
-      gasPrice: 30000000000
+      gasPrice: 35000000000
     }
   },
 
